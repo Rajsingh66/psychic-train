@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Raj Singh – Developer & Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --border: #1e1e2e;
+    --orange: #ff5c28;
+    --yellow: #ffd60a;
+    --blue: #3b82f6;
+    --green: #22c55e;
+    --pink: #f472b6;
+    --text: #f0f0f5;
+    --muted: #6b7280;
+    --card: #111118;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--orange); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .blob-1 {
+    width: 600px; height: 600px;
+    background: var(--orange);
+    top: -100px; right: -100px;
+  }
+
+  .blob-2 {
+    width: 400px; height: 400px;
+    background: var(--blue);
+    bottom: -50px; left: 200px;
+  }
+
+  .hero-content {
+    max-width: 900px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,92,40,0.12);
+    border: 1px solid rgba(255,92,40,0.3);
+    color: var(--orange);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 .line-2 {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(240,240,245,0.3);
+  }
+
+  .hero h1 .highlight {
+    position: relative;
+    color: var(--orange);
+    -webkit-text-stroke: 0;
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    font-weight: 300;
+    line-height: 1.7;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #ff7043;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,92,40,0.35);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    margin-top: 4rem;
+    display: flex;
+    gap: 3rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .stat-num span { color: var(--orange); }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    margin-bottom: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 60px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 16px;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,92,40,0.3);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .project-accent {
+    width: 40px; height: 4px;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .project-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .project-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: opacity 0.2s;
+  }
+
+  .project-link:hover { opacity: 0.7; }
+
+  .project-visual {
+    background: var(--surface);
+    border-radius: 12px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .skill-card:hover { border-color: rgba(255,92,40,0.3); }
+
+  .skill-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-cat {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .skill-list {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .about-text p strong { color: var(--text); }
+
+  .about-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .highlight-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+  }
+
+  .highlight-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--orange);
+  }
+
+  .highlight-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: var(--orange);
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-sub {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  /* ── DIVIDER ── */
+  .full-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 4rem;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">RAJ<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-blob blob-1"></div>
+  <div class="hero-bg-blob blob-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Available for internships</div>
+    <h1>
+      <div>I BUILD</div>
+      <div class="line-2">THINGS THAT</div>
+      <div><span class="highlight">SHIP.</span></div>
+    </h1>
+    <p class="hero-sub">
+      CS student at Poornima University specialising in AI & Data Science.
+      I build full-stack apps, data pipelines, and AI-powered tools —
+      and I care about getting them out the door.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">See My Work ↓</a>
+      <a href="https://github.com/Rajsingh66" target="_blank" class="btn btn-outline">GitHub →</a>
+      <a href="mailto:rajsinghh135@gmail.com" class="btn btn-outline">Email Me</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Projects Shipped</div>
+      </div>
+      <div>
+        <div class="stat-num">40<span>+</span></div>
+        <div class="stat-label">LeetCode Problems</div>
+      </div>
+      <div>
+        <div class="stat-num">1600<span>+</span></div>
+        <div class="stat-label">HackerRank Score</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <h2 class="section-title">Things I've Built</h2>
+
+  <div class="projects-grid">
+
+    <!-- UrbanPark – Featured -->
+    <div class="project-card featured">
+      <div>
+        <div class="project-accent" style="background:var(--green)"></div>
+        <div class="project-number">01 — Hackathon Build</div>
+        <div class="project-title">UrbanPark – Smart Parking Finder</div>
+        <p class="project-desc">
+          Full-stack parking app with user auth, real-time spot availability,
+          peak-hour prediction, dynamic price surging, next-available-spot forecasting,
+          and QR code entry. Built end-to-end at a hackathon with a team.
+        </p>
+        <div class="project-tags">
+          <span class="tag">MongoDB</span>
+          <span class="tag">Express</span>
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Prediction</span>
+          <span class="tag">QR Code</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/raghav1902/Urban-park" target="_blank" class="project-link" style="color:var(--green)">GitHub →</a>
+        </div>
+      </div>
+      <div class="project-visual">🅿️</div>
+    </div>
+
+    <!-- Event Scraper -->
+    <div class="project-card">
+      <div class="project-accent" style="background:var(--orange)"></div>
+      <div class="project-number">02 — Live & Deployed</div>
+      <div class="project-title">Event Scraper – Live Aggregator</div>
+      <p class="project-desc">
+        Scrapes events from multiple platforms, deduplicates listings,
+        stores clean data to Google Sheets, and surfaces everything on
+        a live public dashboard. Running on Railway.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Flask</span>
+        <span class="tag">Web Scraping</span>
+        <span class="tag">Google Sheets API</span>
+        <span class="tag">Railway</span>
+      </div>
+      <div class="project-links">
+        <a href="https://event-scraper-production.up.railway.app/" target="_blank" class="project-link" style="color:var(--orange)">Live Demo →</a>
+        <a href="https://github.com/Rajsingh66/event-scraper" target="_blank" class="project-link" style="color:var(--muted)">GitHub →</a>
+      </div>
+    </div>
+
+    <!-- ChatGPT Clone -->
+    <div class="project-card">
+      <div class="project-accent" style="background:var(--blue)"></div>
+      <div class="project-number">03 — AI Integration</div>
+      <div class="project-title">ChatGPT Clone – LLM Chat App</div>
+      <p class="project-desc">
+        LLM-powered conversational app with real-time AI responses.
+        Built full system architecture — Flask backend, prompt engineering,
+        and frontend interface — from scratch.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Flask</span>
+        <span class="tag">LLM API</span>
+        <span class="tag">Prompt Engineering</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Rajsingh66" target="_blank" class="project-link" style="color:var(--blue)">GitHub →</a>
+      </div>
+    </div>
+
+    <!-- Weather Detector -->
+    <div class="project-card" style="display:none"> <!-- kept in DOM, shown below via JS -->
+    </div>
+
+  </div>
+
+  <!-- Weather card separately (3-col row with 1 card) -->
+  <div style="margin-top:1.5rem">
+    <div class="project-card" style="max-width:100%">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center">
+        <div>
+          <div class="project-accent" style="background:var(--yellow)"></div>
+          <div class="project-number">04 — Data Pipeline</div>
+          <div class="project-title">Weather Detector – Real-Time Dashboard</div>
+          <p class="project-desc">
+            Fetches, cleans, and normalises live meteorological data via API.
+            Handles missing values and outliers, then visualises trends,
+            forecasts, and historical comparisons on an interactive dashboard.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">Data Cleaning</span>
+            <span class="tag">API Integration</span>
+            <span class="tag">Visualisation</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Rajsingh66" target="_blank" class="project-link" style="color:var(--yellow)">GitHub →</a>
+          </div>
+        </div>
+        <div class="project-visual">🌦️</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Stack</div>
+  <h2 class="section-title">What I Work With</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-cat">Languages</div>
+      <div class="skill-list">Python · JavaScript · Java · R</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-cat">Frontend</div>
+      <div class="skill-list">React.js · Next.js · HTML5 · Tailwind CSS · Bootstrap</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-cat">Backend</div>
+      <div class="skill-list">Flask · Node.js · Express.js · REST APIs</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-cat">Data & DB</div>
+      <div class="skill-list">MongoDB · Pandas · NumPy · Google Sheets API · DBMS</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-cat">AI / ML</div>
+      <div class="skill-list">Scikit-learn · LLM API Integration · Prompt Engineering · EDA</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🛠️</div>
+      <div class="skill-cat">Tools & Infra</div>
+      <div class="skill-list">Git · GitHub · Railway · Agile / Scrum · Power BI</div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm <strong>Raj Singh</strong>, a B.Tech student at Poornima University (Batch 2027)
+        specialising in AI & Data Science. But honestly, I spend more time
+        <strong>building things</strong> than sitting in lectures.
+      </p>
+      <p>
+        I've shipped a live event scraper running on Railway, built a full-stack
+        parking app with ML predictions at a hackathon, and integrated LLMs
+        into real applications. I pick up new tools fast and care about
+        <strong>getting things done</strong> over talking about getting things done.
+      </p>
+      <p>
+        Currently looking for internships where I can write code that matters
+        and work with people who are building something real.
+      </p>
+      <div style="margin-top:1.5rem">
+        <a href="mailto:rajsinghh135@gmail.com" class="btn btn-primary">Let's Talk →</a>
+      </div>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <div class="highlight-num">40+</div>
+        <div class="highlight-desc">LeetCode Problems</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-num">1600+</div>
+        <div class="highlight-desc">HackerRank Score</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-num">4+</div>
+        <div class="highlight-desc">Projects Shipped</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-num">7.5</div>
+        <div class="highlight-desc">University CGPA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="section-label" style="justify-content:center;margin-bottom:1rem">Contact</div>
+    <div class="contact-title">Let's Build Something.</div>
+    <p class="contact-sub">Open to internships, collaborations, and interesting problems.</p>
+    <div class="contact-links">
+      <a href="mailto:rajsinghh135@gmail.com" class="btn btn-primary">rajsinghh135@gmail.com</a>
+      <a href="https://github.com/Rajsingh66" target="_blank" class="btn btn-outline">GitHub</a>
+      <a href="https://linkedin.com/in/raj-singh-49a917290" target="_blank" class="btn btn-outline">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by Raj Singh · 2026</p>
+</footer>
+
+</body>
+</html>
